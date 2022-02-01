@@ -30,13 +30,12 @@ namespace TicketSystem
                         string line = fileReader.ReadLine();
                         Console.WriteLine(line);
 
+
                         while (!fileReader.EndOfStream)
                         {
                             line = fileReader.ReadLine();
                             var column = line.Split(",");
-                            Console.WriteLine(
-                                "TicketID {0},Summary {1},Status {2},Priority {3},Submitter {4},Assigned {5},Watching {6}",
-                                column[0], column[1], column[2], column[3], column[4], column[5], column[6]);
+                            Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}", column[0], column[1], column[2], column[3], column[4], column[5], column[6]);
                         }
                         fileReader.Close();
                     }
@@ -49,48 +48,52 @@ namespace TicketSystem
                 {
                     // Write
 
-                    StreamWriter fileWriter = new StreamWriter(file);
+                    StreamWriter fileWriter = new StreamWriter(file, append: true);
 
-                    Console.Write("Enter Ticket ID: ");
+                    // Array for people who are watching ticket.
+                    string[] watching = new string[5];
+
+                    int i;
+
+                    Console.Write("Enter Ticket ID #: ");
                     int ticketID = Convert.ToInt32(Console.ReadLine());
 
                     Console.Write("Enter Ticket summary: ");
-                    var summary = Console.ReadLine();
+                    string summary = Console.ReadLine();
 
                     Console.Write("Enter Ticket status: ");
-                    var status = Console.ReadLine();
+                    string status = Console.ReadLine();
 
                     Console.Write("Enter Ticket priority: ");
-                    var priority = Console.ReadLine();
+                    string priority = Console.ReadLine();
 
                     Console.Write("Enter Ticket submitter: ");
-                    var submitter = Console.ReadLine();
+                    string submitter = Console.ReadLine();
 
                     Console.Write("Enter who the ticket is assigned: ");
-                    var assigned = Console.ReadLine();
+                    string assigned = Console.ReadLine();
 
-                    Console.Write("Enter who is watching the ticket: ");
-                    var watching = Console.ReadLine();
 
-                    Console.WriteLine("Anyone else watching the ticket (Y,N): ");
-                    string others = Console.ReadLine().ToUpper();
-
-                    while (others != "N")
+                    for (i = 0; i < 5; i++)
                     {
-                        Console.Write("Enter who else is watching the ticket: ");
-                        watching = Console.ReadLine();
-                        Console.WriteLine("Anyone else watching the ticket (Y/N): ");
-                        others = Console.ReadLine().ToUpper();
+                        Console.Write("Enter who is watching the ticket: ");
+                        watching[i] = Console.ReadLine();
+
+                        Console.WriteLine("Anyone else watching the ticket? (Y/N)?");
+                        // input the response
+                        string others = Console.ReadLine().ToUpper();
+                        // if no then break out of loop
+                        if (others != "Y") { break; }
                     }
+                    string watchers = string.Join("|", watching);
 
-                    var entryRow = (ticketID, summary, status, priority, submitter, assigned, watching);
+                    var entryRow = (ticketID, summary, status, priority, submitter, assigned, watchers);
 
+                    fileWriter.WriteLine();
                     fileWriter.WriteLine(entryRow);
 
                     fileWriter.Close();
                 }
-
-
             } while (userChoice == "1" || userChoice == "2");
         }
     }
