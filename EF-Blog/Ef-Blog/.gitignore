@@ -452,14 +452,3 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-/ml-latest-small/ml-latest-small
-/Blog/Blog/appSettings.json
-/StringTestAssignment
-/MovieSearchAssignment
-/Abstract-inClassAssignment
-/ml-latest-small.zip
-/MovieLibrary
-/MovieLibraryAssignment.zip
-*.json
-*.pdf
-/MovieLibraryOO
